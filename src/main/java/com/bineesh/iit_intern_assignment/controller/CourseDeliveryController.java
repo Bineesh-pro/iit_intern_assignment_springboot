@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("instances")
+@CrossOrigin
 public class CourseDeliveryController {
 
     @Autowired
