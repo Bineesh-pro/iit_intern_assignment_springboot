@@ -23,18 +23,19 @@ public class CourseDeliveryController {
         return courseDeliveryService.saveCourseDelivery(courseDeliveryRequest);
     }
 
-    @GetMapping("{year}/{semester}/{courseId}")
-    public CourseDelivery getCourseDelivery(@PathVariable String year,@PathVariable int semester,@PathVariable int courseId){
+    @GetMapping
+    public List<CourseDelivery> getCourseDelivery(
+            @RequestParam(required = false,defaultValue = "0") int year,
+            @RequestParam(required = false,defaultValue = "0") int semester,
+            @RequestParam(required = false,defaultValue = "0") int courseId
+    ) {
+        System.out.println(year);
         return courseDeliveryService.getCourseDelivery(year,semester,courseId);
     }
 
     @DeleteMapping("{year}/{semester}/{courseId}")
-    public String deleteCourseDelivery(@PathVariable String year,@PathVariable int semester,@PathVariable int courseId){
+    public String deleteCourseDelivery(@PathVariable int year,@PathVariable int semester,@PathVariable int courseId){
         return courseDeliveryService.deleteCourseDelivery(year,semester,courseId);
     }
 
-    @GetMapping("{year}/{semester}")
-    public List<Course> getCourseDeliveryCourses(@PathVariable String year, @PathVariable int semester){
-        return courseDeliveryService.getCourses(year,semester);
-    }
 }

@@ -1,9 +1,7 @@
 package com.bineesh.iit_intern_assignment.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,9 +14,10 @@ import java.util.List;
 public class CourseDelivery {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     int instanceId;
 
-    String yearOfDelivery;
+    int yearOfDelivery;
 
     int semester;
 

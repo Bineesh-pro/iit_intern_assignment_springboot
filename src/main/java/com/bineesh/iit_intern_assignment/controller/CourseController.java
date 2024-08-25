@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping
-@CrossOrigin
+@CrossOrigin("*")
 public class CourseController {
 
     @Autowired

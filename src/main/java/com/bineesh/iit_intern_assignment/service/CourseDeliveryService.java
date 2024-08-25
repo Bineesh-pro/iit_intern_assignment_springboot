@@ -39,15 +39,28 @@ public class CourseDeliveryService {
         }
     }
 
-    public CourseDelivery getCourseDelivery(String year, int semester, int courseId) {
-        CourseDelivery courseDelivery = courseDeliveryRepo.findByYearOfDeliveryAndSemester(year,semester);
-        for(Course course : courseDelivery.getCourses()){
-            if(course.getCourseId() == courseId)return courseDelivery;
+    public List<CourseDelivery> getCourseDelivery(int year, int semester, int courseId) {
+        List<CourseDelivery> courseDeliveryList = courseDeliveryRepo.findAll();
+        if(year != 0){
+            courseDeliveryList = courseDeliveryList
+                    .stream().filter(cd -> cd.getYearOfDelivery() == year)
+                    .toList();
         }
-        return null;
+        if(semester != 0 && year != 0){
+            courseDeliveryList = courseDeliveryList
+                    .stream().filter(cd -> cd.getSemester() == semester)
+                    .toList();
+        }
+
+        if(courseId != 0 ){
+            courseDeliveryList = courseDeliveryList
+                    .stream().filter(cd -> cd.getCourses().contains(courseService.getCourseById(courseId)))
+                    .toList();
+        }
+        return courseDeliveryList;
     }
 
-    public String deleteCourseDelivery(String year, int semester, int courseId) {
+    public String deleteCourseDelivery(int year, int semester, int courseId) {
         Course course = courseService.getCourseById(courseId);
         CourseDelivery courseDelivery = courseDeliveryRepo.findByYearOfDeliveryAndSemester(year,semester);
         List<Course> courses = courseDelivery.getCourses();
@@ -55,9 +68,5 @@ public class CourseDeliveryService {
         courseDelivery.setCourses(courses);
         courseDeliveryRepo.save(courseDelivery);
         return "Course Delivery deleted";
-    }
-
-    public List<Course> getCourses(String year, int semester) {
-        return courseDeliveryRepo.findByYearOfDeliveryAndSemester(year,semester).getCourses();
     }
 }

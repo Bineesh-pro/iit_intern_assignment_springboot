@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class CourseDeliveryRequest {
     int instanceId;
 
-    String yearOfDelivery;
+    int yearOfDelivery;
 
     int semester;
 
